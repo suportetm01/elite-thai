@@ -55,9 +55,18 @@ O formulário monta a mensagem no aparelho do visitante e abre o WhatsApp da aca
 
 ## Publicação
 
-1. Defina `NEXT_PUBLIC_SITE_URL` (veja `.env.example`) com o domínio final — usado no SEO, no sitemap e nas imagens de compartilhamento.
-2. `npm run build` e publique a pasta `out/` (Netlify, Cloudflare Pages, Vercel, GitHub Pages, Hostinger, qualquer servidor de arquivos).
-3. Os cabeçalhos de segurança estão em `public/_headers` (lido por Netlify e Cloudflare Pages). Em outras hospedagens, configure-os no servidor.
+### Vercel (recomendado)
+
+1. Em [vercel.com/new](https://vercel.com/new), importe o repositório `suportetm01/elite-thai` do GitHub.
+2. Mantenha o que a Vercel detecta: framework **Next.js**, comando `npm run build`. Não é preciso configurar variáveis.
+3. Clique em **Deploy**. Cada envio para a branch `main` publica de novo sozinho; outras branches geram endereços de pré-visualização.
+4. Domínio próprio (opcional): em *Settings → Domains*, adicione o domínio e siga as instruções de DNS. Depois, em *Settings → Environment Variables*, crie `NEXT_PUBLIC_SITE_URL` com o endereço final (ex.: `https://www.elitethai.com.br`) e publique de novo.
+
+Sem `NEXT_PUBLIC_SITE_URL`, o site usa o endereço de produção da Vercel (ex.: `https://elite-thai.vercel.app`) no SEO, no sitemap e na imagem de compartilhamento. Os cabeçalhos de segurança, o cache de mídia e o redirecionamento de `/tecnicas` estão em `vercel.json`.
+
+### Outras hospedagens
+
+`npm run build` e publique a pasta `out/` (Netlify, Cloudflare Pages, GitHub Pages, Hostinger, qualquer servidor de arquivos), com `NEXT_PUBLIC_SITE_URL` definido no build. Os cabeçalhos de segurança para Netlify e Cloudflare Pages estão em `public/_headers`; em outras hospedagens, configure-os no servidor.
 
 ## Estrutura
 
