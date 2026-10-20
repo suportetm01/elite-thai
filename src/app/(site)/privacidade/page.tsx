@@ -17,7 +17,7 @@ export default async function PrivacidadePage() {
       <PageHero eyebrow="LGPD" title="Política de privacidade" description="Como este site trata (e não guarda) dados pessoais, e como você pode exercer seus direitos." />
       <Section className="pt-12">
         <div className="container-site max-w-3xl space-y-10 leading-relaxed text-zinc-300 [&_h2]:display [&_h2]:text-4xl [&_h2]:text-white [&_li]:ml-5 [&_li]:list-disc [&_ul]:mt-3 [&_ul]:space-y-2">
-          <p className="text-sm text-zinc-500">Última atualização: 19 de outubro de 2026.</p>
+          <p className="text-sm text-zinc-500">Última atualização: 20 de outubro de 2026.</p>
           <section>
             <h2>1. Quem somos</h2>
             <p className="mt-3">
@@ -28,7 +28,7 @@ export default async function PrivacidadePage() {
           <section>
             <h2>2. O site não coleta dados pessoais</h2>
             <p className="mt-3">
-              Este é um site informativo: não tem cadastro, login, banco de dados nem estatísticas de visita, e não usa cookies.
+              Este é um site informativo: não tem cadastro, login, banco de dados nem estatísticas de visita, e não grava cookies próprios.
             </p>
           </section>
           <section>
@@ -43,7 +43,7 @@ export default async function PrivacidadePage() {
           <section>
             <h2>4. Conteúdo de terceiros</h2>
             <p className="mt-3">
-              Mapas e vídeos de terceiros (Google Maps, YouTube) só são carregados quando você pede. Os links para o Instagram e o WhatsApp
+              O mapa do Google Maps, na seção de localização, abre automaticamente quando você chega até ela, e o Google pode gravar cookies conforme a política de privacidade dele. Vídeos do YouTube só carregam quando você pede. Os links para o Instagram e o WhatsApp
               abrem os serviços dessas empresas, que seguem as próprias regras de privacidade.
             </p>
           </section>
