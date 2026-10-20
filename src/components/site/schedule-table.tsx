@@ -18,7 +18,7 @@ export function ScheduleTable({ schedules }: { schedules: Schedules }) {
                 <li key={s.id}>
                   <p className="stat text-2xl text-white">
                     {s.startTime}
-                    <span className="text-zinc-600"> – {s.endTime}</span>
+                    {s.endTime && <span className="text-zinc-600"> – {s.endTime}</span>}
                   </p>
                   <p className="font-[family-name:var(--font-barlow)] text-sm font-semibold uppercase tracking-wide text-zinc-300">{s.modality.name}</p>
                   {(s.audience || s.level) && <p className="text-xs text-zinc-500">{[s.audience, s.level].filter(Boolean).join(" · ")}</p>}

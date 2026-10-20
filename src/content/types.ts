@@ -85,7 +85,8 @@ export type ClassSchedule = {
   /** 0 = domingo … 6 = sábado */
   weekday: number;
   startTime: string;
-  endTime: string;
+  /** null = a grade divulgada só informa o início */
+  endTime: string | null;
   audience: string | null;
   level: string | null;
 };

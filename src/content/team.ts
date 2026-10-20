@@ -8,7 +8,7 @@ import type { Athlete, ClassSchedule, Instructor } from "./types";
  * { name: "Nome Sobrenome", slug: "nome-sobrenome", role: "Head Coach", graduation: "Kru",
  *   bio: null, photoUrl: "/images/equipe/nome.jpg", instagram: "@perfil", modalities: ["muay-thai"] }
  *
- * Exemplo de horário (segunda, 19h–20h):
+ * Exemplo de horário (segunda, 19h–20h; endTime: null quando só se sabe o início):
  * { modality: "muay-thai", instructor: "nome-sobrenome", weekday: 1, startTime: "19:00", endTime: "20:00",
  *   audience: "Adulto", level: null }
  *
@@ -28,7 +28,32 @@ export const INSTRUCTORS: Instructor[] = [
   },
 ];
 
-export const SCHEDULES: ClassSchedule[] = [];
+/** Mesma aula em vários dias (1 = segunda … 5 = sexta); as artes da grade só informam o início. */
+const aulas = (modality: string, weekdays: number[], startTime: string, audience: string | null = null): ClassSchedule[] =>
+  weekdays.map((weekday) => ({ modality, instructor: null, weekday, startTime, endTime: null, audience, level: null }));
+
+/** Grade divulgada pela academia (arte "Grade de horários" do Muay Thai e artes de cada modalidade). */
+export const SCHEDULES: ClassSchedule[] = [
+  // Muay Thai
+  ...aulas("muay-thai", [1, 2, 4], "05:30"),
+  ...aulas("muay-thai", [2, 4, 5], "07:00"),
+  ...aulas("muay-thai", [2, 4, 5], "08:30"),
+  ...aulas("muay-thai", [1, 3], "08:30", "Kids"),
+  ...aulas("muay-thai", [1, 3], "18:00", "Kids"),
+  ...aulas("muay-thai", [2, 4], "18:00", "Teens"),
+  ...aulas("muay-thai", [1, 2, 3], "19:00"),
+  ...aulas("muay-thai", [1, 3], "19:00", "Feminino"),
+  ...aulas("muay-thai", [1, 2, 3, 4], "20:00"),
+  // Boxe
+  ...aulas("boxe", [1, 2, 5], "20:00"),
+  // MMA
+  ...aulas("mma", [2, 4], "09:30"),
+  ...aulas("mma", [2, 4, 5], "20:00"),
+  // Karatê
+  ...aulas("karate", [4, 5], "19:00"),
+  // Taekwondo
+  ...aulas("taekwondo", [2, 4], "17:00"),
+];
 
 /** Resultados confirmados nos posts da academia, dos atletas e dos eventos (ver competitions.ts). */
 export const ATHLETES: Athlete[] = [
