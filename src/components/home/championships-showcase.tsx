@@ -122,10 +122,15 @@ function Featured({ item }: { item: ChampionshipShowcaseData }) {
 
 function Mosaic({ items }: { items: ChampionshipShowcaseData[] }) {
   if (!items.length) return null;
+  // com poucos campeonatos, o padrão de 6 colunas deixaria buracos: usa duas colunas largas
+  const sparse = items.length < 3;
   return (
-    <Stagger className="mt-4 grid auto-rows-[200px] grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6" step={0.06}>
+    <Stagger
+      className={cn("mt-4 grid gap-4", sparse ? "auto-rows-[280px] md:grid-cols-2" : "auto-rows-[200px] grid-cols-2 md:grid-cols-3 lg:grid-cols-6")}
+      step={0.06}
+    >
       {items.slice(0, SPANS.length).map((item, i) => (
-        <StaggerItem key={item.slug} className={cn("h-full", SPANS[i], i === 0 && "col-span-2 row-span-2 md:col-span-1")}>
+        <StaggerItem key={item.slug} className={cn("h-full", !sparse && SPANS[i], !sparse && i === 0 && "col-span-2 row-span-2 md:col-span-1")}>
           <div className="card-dark group relative h-full overflow-hidden rounded-[16px]">
             <Link href={`/campeonatos/${item.slug}`} className="absolute inset-0 z-[7]" aria-label={`${item.name} (${year(item.startDate)})`} />
             {item.coverUrl ? (
