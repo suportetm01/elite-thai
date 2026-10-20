@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  * Nossa história: rótulo numerado, manchete gigante revelada linha a linha à
  * esquerda e, à direita, a foto da academia, o texto de abertura e os fatos (modalidades,
  * turmas, local). Quando há marcos publicados, a linha do tempo aparece em cartões.
- * Texto, foto e marcos vêm do painel.
+ * Texto, foto e marcos vêm de src/content.
  */
 
 type Entry = { id: string; year: number; title: string; description: string | null; coverUrl?: string | null };
@@ -56,7 +56,7 @@ function TimelineFan({ entries }: { entries: Entry[] }) {
   );
 }
 
-/** A foto da equipe cadastrada no painel tem prioridade sobre a foto padrão. */
+/** A foto da equipe definida em src/content/site.ts tem prioridade sobre a foto padrão. */
 function AcademyPhoto({ photo, name }: { photo: string | null; name: string }) {
   const { src, alt } = photo ? { src: photo, alt: `Equipe da ${name}` } : SITE_MEDIA.history;
   return (

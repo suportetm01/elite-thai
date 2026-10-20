@@ -11,7 +11,7 @@ import { SITE_MEDIA } from "@/lib/site-media";
 import { cn } from "@/lib/utils";
 
 /**
- * Grade "bento" — a Elite Thai em um olhar, em sete cartões. Tudo vem do painel:
+ * Grade "bento" — a Elite Thai em um olhar, em sete cartões. Tudo vem de src/content:
  * modalidades, turmas, horários, depoimento autorizado, fotos (ou as fotos padrão da academia) e números
  * calculados — nada é inventado.
  */
@@ -63,7 +63,7 @@ function ProgramCard({ settings, chips }: { settings: Settings; chips: string[] 
 }
 
 function PhotoCard({ settings, testimonial }: { settings: Settings; testimonial: Testimonial | null }) {
-  // foto do depoimento → foto da equipe do painel → foto padrão da turma
+  // foto do depoimento → foto da equipe (src/content/site.ts) → foto padrão da turma
   const photo = testimonial?.photoUrl ?? settings.teamPhotoUrl;
   const alt = testimonial ? `Foto de ${testimonial.authorName}` : photo ? `Equipe ${settings.name}` : SITE_MEDIA.team.alt;
   const motto = settings.subheadline;
@@ -133,7 +133,8 @@ function HeroCard({ settings, modalities, stats }: { settings: Settings; modalit
           <Image src={photo} alt={`Treino na ${settings.name}`} fill sizes="(min-width: 1024px) 34vw, 100vw" className="object-cover" />
         </div>
       ) : (
-        <div className="absolute inset-0 grid place-items-start justify-center pt-[22%]" aria-hidden>
+        // no cartão alto (computador) a logo fica ao fundo; nos menores ela entra no fluxo, abaixo
+        <div className="absolute inset-0 hidden place-items-start justify-center pt-[22%] lg:grid" aria-hidden>
           <div className="absolute left-1/2 top-[36%] size-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blood/30 blur-[80px]" />
           <Emblem className="relative size-[66%] drop-shadow-[0_30px_60px_rgba(0,0,0,0.6)]" />
         </div>
@@ -149,7 +150,12 @@ function HeroCard({ settings, modalities, stats }: { settings: Settings; modalit
             .join(" · ")}
         </p>
         {numbers.length > 0 && (
-          <dl className="mt-4 grid grid-cols-3 rounded-xl border border-white/10 bg-black/40 px-2 py-3 text-center backdrop-blur">
+          <dl
+            className={cn(
+              "mt-4 grid rounded-xl border border-white/10 bg-black/40 px-2 py-3 text-center backdrop-blur",
+              numbers.length === 1 ? "grid-cols-1" : numbers.length === 2 ? "grid-cols-2" : "grid-cols-3",
+            )}
+          >
             {numbers.map((n) => (
               <div key={n.label}>
                 <dd className="stat text-[2.1rem] text-white">{n.value}</dd>
@@ -157,6 +163,12 @@ function HeroCard({ settings, modalities, stats }: { settings: Settings; modalit
               </div>
             ))}
           </dl>
+        )}
+        {!photo && (
+          <div className="relative mx-auto my-8 grid place-items-center lg:hidden" aria-hidden>
+            <div className="absolute size-[120%] rounded-full bg-blood/30 blur-[60px]" />
+            <Emblem className="relative size-44 drop-shadow-[0_24px_48px_rgba(0,0,0,0.6)] md:size-56" />
+          </div>
         )}
         <div className="mt-auto">
           {place && <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">{`${settings.name} · ${place}`}</p>}

@@ -2,7 +2,7 @@ import Image from "@/components/site/smart-image";
 import { Emblem } from "@/components/brand/emblem";
 import { cn } from "@/lib/utils";
 
-/** Usa o logotipo cadastrado no painel quando houver; caso contrário, a logo oficial padrão. */
+/** Usa o logotipo definido em src/content/site.ts (`logoUrl`) quando houver; caso contrário, a logo oficial. */
 export function BrandMark({ logoUrl, className, priority }: { logoUrl?: string | null; className?: string; priority?: boolean }) {
   if (logoUrl) {
     return (

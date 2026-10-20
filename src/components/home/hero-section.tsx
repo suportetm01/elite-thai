@@ -19,7 +19,7 @@ export function HeroSection({ settings, modalities }: { settings: Settings; moda
       className="film-grain relative flex min-h-[100svh] w-full flex-col overflow-hidden bg-ink [--hero-p:0]"
     >
       <HeroBackdrop>
-        {/* a imagem do painel tem prioridade; sem ela, a foto de treino padrão */}
+        {/* a imagem definida em src/content/site.ts tem prioridade; sem ela, a foto de treino padrão */}
         <HeroPoster videoUrl={settings.heroVideoUrl} posterUrl={settings.heroPosterUrl ?? SITE_MEDIA.heroBackdrop} />
       </HeroBackdrop>
 

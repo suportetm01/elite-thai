@@ -3,7 +3,7 @@ import type { getSchedules } from "@/lib/data/public";
 
 type Schedules = Awaited<ReturnType<typeof getSchedules>>;
 
-/** Grade semanal de horários (somente o que estiver cadastrado no painel). */
+/** Grade semanal de horários (somente o que estiver em src/content/team.ts). */
 export function ScheduleTable({ schedules }: { schedules: Schedules }) {
   const days = [1, 2, 3, 4, 5, 6, 0].filter((d) => schedules.some((s) => s.weekday === d));
   return (

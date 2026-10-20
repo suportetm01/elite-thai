@@ -196,7 +196,7 @@ function ComingSoon() {
               O próximo capítulo <span className="text-blood">começa no ringue.</span>
             </h3>
             <p className="mt-4 max-w-xl leading-relaxed text-zinc-400">
-              Cada campeonato disputado pela equipe será publicado aqui com local, resultados e medalhas oficiais — direto do painel da academia.
+              Cada campeonato disputado pela equipe será publicado aqui com local, resultados e medalhas oficiais.
             </p>
             <Link href="/agenda" className="btn-ghost-line mt-7">
               <CalendarDays className="size-4" /> Ver agenda de eventos
