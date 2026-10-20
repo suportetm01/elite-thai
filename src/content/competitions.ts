@@ -82,7 +82,14 @@ export const CHAMPIONSHIPS: Championship[] = [
   },
 ];
 
-export const RESULTS: Result[] = [];
+/**
+ * Kiffer Fight Night: card oficial (@kifferfightnight, 20/06/2026) e post da equipe.
+ * Campos Fight: card oficial (@camposfightoficial, março/2026) e post da própria atleta.
+ */
+export const RESULTS: Result[] = [
+  { championship: "kiffer-fight-night-2026", athlete: "ana-carolina", category: "Muay Thai amador · 59 kg", placement: "Vitória", medal: "NONE" },
+  { championship: "campos-fight-2026", athlete: "maria-victoria", category: "Feminino · até 55 kg", placement: "Vitória", medal: "NONE" },
+];
 
 export const NEWS: NewsLink[] = [
   {

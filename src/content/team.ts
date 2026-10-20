@@ -30,4 +30,34 @@ export const INSTRUCTORS: Instructor[] = [
 
 export const SCHEDULES: ClassSchedule[] = [];
 
-export const ATHLETES: Athlete[] = [];
+/** Resultados confirmados nos posts da academia, dos atletas e dos eventos (ver competitions.ts). */
+export const ATHLETES: Athlete[] = [
+  {
+    name: "Ana Carolina",
+    slug: "ana-carolina",
+    nickname: "Carol",
+    category: "59 kg",
+    modality: "Muay Thai",
+    instructor: "uanderley-moreira",
+    bio: "Venceu no Kiffer Fight Night – 2ª edição, em Itaperuna/RJ, aceitando o desafio de lutar em uma categoria acima da que está acostumada. Teve a instrutora Maria Victória ao lado na preparação e no córner.",
+    photoUrl: "/images/atletas/ana-carolina.webp",
+    coverUrl: "/images/campeonatos/kiffer-fight-night-2026.webp",
+    instagram: null,
+    otherSocialUrl: null,
+    featured: true,
+  },
+  {
+    name: "Maria Victória",
+    slug: "maria-victoria",
+    nickname: "Mavi",
+    category: "Até 55 kg",
+    modality: "Muay Thai",
+    instructor: "uanderley-moreira",
+    bio: "Atleta e instrutora de Muay Thai da Elite Thai. No Campos Fight – 4ª edição, venceu o confronto feminino interestadual até 55 kg contra uma atleta de Carangola/MG.",
+    photoUrl: "/images/atletas/maria-victoria.webp",
+    coverUrl: "/images/campeonatos/campos-fight-2026.webp",
+    instagram: "@mariavictorialima_",
+    otherSocialUrl: null,
+    featured: true,
+  },
+];
