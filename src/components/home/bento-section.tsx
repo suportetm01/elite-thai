@@ -111,13 +111,14 @@ function ScheduleCard({ modalities, schedules }: { modalities: Modality[]; sched
 function HeroCard({ settings, modalities, stats }: { settings: Settings; modalities: Modality[]; stats: Stats }) {
   const years = settings.foundedYear ? new Date().getFullYear() - settings.foundedYear : 0;
   const numbers = [
-    { value: modalities.length, label: "modalidades" },
-    years > 0 ? { value: years, label: years === 1 ? "ano" : "anos" } : null,
-    stats.athletes > 0 ? { value: stats.athletes, label: "atletas" } : null,
-    stats.medals > 0 ? { value: stats.medals, label: "medalhas" } : null,
-    stats.championships > 0 ? { value: stats.championships, label: "campeonatos" } : null,
+    modalities.length > 0 ? { value: String(modalities.length), label: "modalidades" } : null,
+    settings.students ? { value: settings.students, label: "alunos" } : null,
+    years > 0 ? { value: String(years), label: years === 1 ? "ano" : "anos" } : null,
+    stats.athletes > 0 ? { value: String(stats.athletes), label: "atletas" } : null,
+    stats.medals > 0 ? { value: String(stats.medals), label: "medalhas" } : null,
+    stats.championships > 0 ? { value: String(stats.championships), label: "campeonatos" } : null,
   ]
-    .filter((n): n is { value: number; label: string } => Boolean(n && n.value > 0))
+    .filter((n): n is { value: string; label: string } => Boolean(n))
     .slice(0, 3);
   const place = [settings.city, settings.state].filter(Boolean).join(" · ");
   const photo = settings.heroPosterUrl ?? settings.teamPhotoUrl;

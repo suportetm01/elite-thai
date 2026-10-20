@@ -15,7 +15,18 @@ import type { Athlete, ClassSchedule, Instructor } from "./types";
  * Atletas: cadastre somente com autorização de uso de imagem (e do responsável, se menor).
  */
 
-export const INSTRUCTORS: Instructor[] = [];
+export const INSTRUCTORS: Instructor[] = [
+  {
+    name: "Uanderley Moreira",
+    slug: "uanderley-moreira",
+    role: "Fundador · Professor de Muay Thai",
+    graduation: "“Carioca” · campeão estadual como atleta",
+    bio: "Começou a praticar Muay Thai aos 14 anos. Antes de se tornar professor, disputou campeonatos estaduais, eventos de outras equipes e o Campeonato Brasileiro, conquistando também o título de campeão estadual. A vivência nos treinos e nas competições orienta o ensino, respeitando os objetivos e o ritmo de cada aluno.",
+    photoUrl: null,
+    instagram: "@_uanderleymoreira_",
+    modalities: ["muay-thai"],
+  },
+];
 
 export const SCHEDULES: ClassSchedule[] = [];
 

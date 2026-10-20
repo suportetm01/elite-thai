@@ -23,6 +23,8 @@ export type Settings = {
   intro: string | null;
   historySummary: string | null;
   foundedYear: number | null;
+  /** número de alunos como texto livre (ex.: "+100"); null = não exibe */
+  students: string | null;
   trainingHowItWorks: string | null;
   trainingBeginners: string | null;
   trainingAdvanced: string | null;
@@ -196,4 +198,15 @@ export type Testimonial = {
   authorInfo: string | null;
   text: string;
   photoUrl: string | null;
+};
+
+export type HistoryStory = {
+  title: string;
+  paragraphs: string[];
+  /** frase em destaque no meio do texto */
+  quote: string | null;
+  /** números e marcos citados na história */
+  highlights: { value: string; label: string }[];
+  signature: string;
+  motto: string | null;
 };

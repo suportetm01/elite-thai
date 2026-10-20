@@ -10,8 +10,10 @@ export const SETTINGS: Settings = {
   headline: "MAIS QUE UMA EQUIPE. UMA ELITE.",
   subheadline: "Disciplina. Respeito. Evolução.",
   intro: null,
-  historySummary: null,
+  historySummary:
+    "A Elite Thai tem suas raízes na trajetória de Uanderley Moreira, conhecido como Carioca, que começou a praticar Muay Thai aos 14 anos. Hoje, o Centro de Artes Marciais, em Castelo/ES, reúne seis modalidades e mais de 100 alunos.",
   foundedYear: null,
+  students: "+100",
   trainingHowItWorks: null,
   trainingBeginners: null,
   trainingAdvanced: null,

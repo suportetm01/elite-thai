@@ -2,13 +2,14 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Image from "@/components/site/smart-image";
 import { Activity, Brain, Dumbbell, Flame, HeartPulse, Shield } from "lucide-react";
+import { InstagramIcon } from "@/components/brand/social-icons";
 import { PhotoPlaceholder } from "@/components/site/cards";
 import { JsonLd, breadcrumbJsonLd } from "@/components/site/json-ld";
 import { Reveal, Stagger, StaggerItem } from "@/components/site/reveal";
 import { ScheduleTable } from "@/components/site/schedule-table";
 import { PageHero, Section, SectionHeading } from "@/components/site/section";
 import { getInstructors, getModalities, getSchedules, getSettings } from "@/lib/data/public";
-import { whatsappLink } from "@/lib/format";
+import { instagramHandle, instagramUrl, whatsappLink } from "@/lib/format";
 import { TRIAL_PATH } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -118,7 +119,12 @@ export default async function TreinamentosPage() {
                       <h3 className="display mt-1 text-4xl text-white">{p.name}</h3>
                       {p.graduation && <p className="mt-1 text-sm text-zinc-400">{p.graduation}</p>}
                       {p.modalities.length > 0 && <p className="mt-2 text-xs uppercase tracking-[0.18em] text-zinc-500">{p.modalities.map((m) => m.name).join(" · ")}</p>}
-                      {p.bio && <p className="mt-4 line-clamp-5 whitespace-pre-line text-sm leading-relaxed text-zinc-400">{p.bio}</p>}
+                      {p.bio && <p className="mt-4 whitespace-pre-line text-sm leading-relaxed text-zinc-400">{p.bio}</p>}
+                      {p.instagram && (
+                        <a href={instagramUrl(p.instagram)!} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm text-gold hover:underline">
+                          <InstagramIcon className="size-4" /> {instagramHandle(instagramUrl(p.instagram))}
+                        </a>
+                      )}
                     </div>
                   </article>
                 </StaggerItem>

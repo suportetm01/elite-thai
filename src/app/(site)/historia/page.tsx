@@ -1,20 +1,20 @@
 import type { Metadata } from "next";
-import { History } from "lucide-react";
 import { HistoryManifesto } from "@/components/home/history-manifesto";
-import { EmptyState, Section } from "@/components/site/section";
+import { HistoryStory } from "@/components/home/history-story";
+import { Section } from "@/components/site/section";
 import { Timeline } from "@/components/site/timeline";
 import { JsonLd, breadcrumbJsonLd } from "@/components/site/json-ld";
 import { modalityAudiences } from "@/lib/data/mappers";
-import { getModalities, getSettings, getTimeline } from "@/lib/data/public";
+import { getHistory, getModalities, getSettings, getTimeline } from "@/lib/data/public";
 
 export const metadata: Metadata = {
   title: "Nossa história",
-  description: "A trajetória da Elite Thai, centro de artes marciais em Castelo/ES: marcos, conquistas e momentos importantes da equipe.",
+  description: "A história da Elite Thai e do professor Uanderley Moreira, o Carioca: da trajetória como atleta e campeão estadual ao Centro de Artes Marciais em Castelo/ES.",
   alternates: { canonical: "/historia" },
 };
 
 export default async function HistoriaPage() {
-  const [settings, timeline, modalities] = await Promise.all([getSettings(), getTimeline(), getModalities()]);
+  const [settings, timeline, modalities, history] = await Promise.all([getSettings(), getTimeline(), getModalities(), getHistory()]);
   const items = timeline.map((t) => ({
     id: t.id,
     year: t.year,
@@ -41,17 +41,14 @@ export default async function HistoriaPage() {
         audiences={modalityAudiences(modalities)}
         timeline={timeline}
       />
-      <Section>
-        <div className="container-site">
-          {items.length ? (
+      <HistoryStory story={history} />
+      {items.length > 0 && (
+        <Section>
+          <div className="container-site">
             <Timeline items={items} />
-          ) : (
-            <EmptyState title="Linha do tempo em construção" icon={<History className="size-8" />}>
-              Os marcos oficiais da equipe — fundação, primeiros campeonatos e conquistas — serão publicados aqui pela própria Elite Thai.
-            </EmptyState>
-          )}
-        </div>
-      </Section>
+          </div>
+        </Section>
+      )}
     </>
   );
 }

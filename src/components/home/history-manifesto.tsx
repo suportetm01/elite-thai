@@ -98,6 +98,7 @@ export function HistoryManifesto({
   const facts = [
     settings.foundedYear ? { k: "Desde", v: String(settings.foundedYear) } : null,
     modalities.length ? { k: "Modalidades", v: String(modalities.length).padStart(2, "0") } : null,
+    settings.students ? { k: "Alunos", v: settings.students } : null,
     turmas ? { k: "Turmas", v: turmas } : null,
     settings.city ? { k: "Onde", v: [settings.city, settings.state].filter(Boolean).join("/") } : null,
   ].filter((f): f is { k: string; v: string } => Boolean(f));
@@ -131,14 +132,14 @@ export function HistoryManifesto({
           <Reveal delay={0.1} className="min-w-0">
             <AcademyPhoto photo={settings.teamPhotoUrl} name={settings.name} />
             <p className="mt-7 max-w-xl whitespace-pre-line text-[0.95rem] leading-relaxed text-zinc-400">
+              {/* se o resumo já cita a academia, o destaque fica só com o local (sem repetir o nome) */}
               <strong className="font-semibold text-white">
-                {settings.name}
-                {place ? ` — ${place}.` : "."}
+                {story.includes(settings.name) && place ? `${place}.` : `${settings.name}${place ? ` — ${place}` : ""}.`}
               </strong>{" "}
               {story}
             </p>
             {facts.length > 0 && (
-              <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 sm:grid-flow-col sm:auto-cols-fr sm:grid-cols-none">
+              <dl className="mt-7 grid grid-cols-2 gap-x-6 gap-y-5 border-t border-white/10 pt-6 sm:grid-flow-col sm:auto-cols-fr sm:grid-cols-none lg:grid-cols-2 lg:grid-flow-row xl:grid-flow-col xl:grid-cols-none">
                 {facts.map((f) => (
                   <div key={f.k} className="min-w-0">
                     <dt className="font-mono text-[10px] uppercase tracking-[0.28em] text-zinc-500">{f.k}</dt>
@@ -152,10 +153,10 @@ export function HistoryManifesto({
 
         {showEntries && timeline.length > 0 && <TimelineFan entries={timeline} />}
 
-        {showLink && timeline.length > 0 && (
+        {showLink && (
           <Reveal className="mt-12">
             <Link href="/historia" className="btn-ghost-line">
-              Ver a linha do tempo completa <ArrowUpRight className="size-4" />
+              Ler a história completa <ArrowUpRight className="size-4" />
             </Link>
           </Reveal>
         )}

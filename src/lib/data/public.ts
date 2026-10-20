@@ -1,4 +1,5 @@
 import { CHAMPIONSHIPS, EVENTS, NEWS, RESULTS } from "@/content/competitions";
+import { HISTORY } from "@/content/history";
 import { MEDIA, TESTIMONIALS, TIMELINE } from "@/content/media";
 import { MODALITIES, SETTINGS } from "@/content/site";
 import { ATHLETES, INSTRUCTORS, SCHEDULES } from "@/content/team";
@@ -230,6 +231,10 @@ export async function getTimeline() {
       championship: championshipRef(t.championship),
       media: MEDIA.filter((m) => m.timelineEntry === t.id).slice(0, 6).map(toMedia),
     }));
+}
+
+export async function getHistory() {
+  return HISTORY;
 }
 
 export async function getTestimonials() {
