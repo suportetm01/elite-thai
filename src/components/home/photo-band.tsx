@@ -13,9 +13,10 @@ const subscribe = (cb: () => void) => {
 };
 
 /**
- * Faixa de foto em largura total entre seções: a imagem desliza mais devagar que a página
- * (paralaxe) e a frase fica por cima. No celular a foto fica num quadro 4:3 no topo (sem
- * zoom excessivo) e a frase logo abaixo; com "reduzir movimento" a foto fica parada.
+ * Faixa de foto entre seções: a imagem desliza mais devagar que a página (paralaxe) e a
+ * frase fica por cima. No computador a foto ocupa os dois terços da direita e se dissolve no
+ * fundo à esquerda, para a frase não cobrir quem está na foto; no celular ela fica num quadro
+ * 4:3 no topo (sem zoom excessivo) e a frase logo abaixo. Com "reduzir movimento" fica parada.
  */
 export function PhotoBand({ src, children }: { src: string; children: React.ReactNode }) {
   const ref = useRef<HTMLElement>(null);
@@ -26,8 +27,12 @@ export function PhotoBand({ src, children }: { src: string; children: React.Reac
 
   return (
     <section ref={ref} className="relative isolate flex items-end overflow-hidden bg-ink md:min-h-[78vh]">
-      <motion.div className="absolute inset-x-0 top-0 -z-10 aspect-[4/3] md:-inset-y-[12%] md:aspect-auto" style={reduce || !desktop ? undefined : { y }} aria-hidden>
-        <Image src={src} alt="" fill sizes="100vw" className="object-cover object-[60%_40%]" />
+      <motion.div
+        className="absolute inset-x-0 top-0 -z-10 aspect-[4/3] md:-inset-y-[12%] md:left-[34%] md:aspect-auto md:[mask-image:linear-gradient(90deg,transparent,black_35%)]"
+        style={reduce || !desktop ? undefined : { y }}
+        aria-hidden
+      >
+        <Image src={src} alt="" fill sizes="(min-width: 768px) 66vw, 100vw" className="object-cover object-[60%_40%]" />
       </motion.div>
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(11,11,11,0.55)_0%,rgba(11,11,11,0.15)_35%,rgba(11,11,11,0.7)_75%,#0b0b0b_100%)]" aria-hidden />
       <div className="absolute inset-0 -z-10 md:bg-[linear-gradient(90deg,rgba(11,11,11,0.75),transparent_65%)]" aria-hidden />

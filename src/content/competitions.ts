@@ -48,10 +48,50 @@ export const CHAMPIONSHIPS: Championship[] = [
     officialUrl: null,
     featured: false,
   },
+  {
+    name: "Campos Fight – 4ª edição",
+    slug: "campos-fight-2026",
+    startDate: "2026-04-12",
+    endDate: null,
+    venue: null,
+    city: "Campos dos Goytacazes",
+    state: "RJ",
+    organizer: "Campos Fight",
+    level: null,
+    description:
+      "Confrontos interestaduais contra equipes do Rio de Janeiro e de Minas Gerais. Foram 2 vitórias — sobre um atleta de MG e sobre o atleta da casa — e uma derrota que serviu para acender ainda mais o fogo.\n\nQuem cai e levanta é mais perigoso.",
+    coverUrl: "/images/campeonatos/campos-fight-2026.webp",
+    officialUrl: "https://www.instagram.com/camposfightoficial/",
+    featured: false,
+  },
+  {
+    name: "Campeonato Estadual de Muay Thai",
+    slug: "estadual-es-2025",
+    startDate: "2025-07-06",
+    endDate: null,
+    venue: null,
+    city: null,
+    state: "ES",
+    organizer: null,
+    level: "Estadual",
+    description:
+      "A Elite Thai levou 7 atletas ao Estadual e voltou com 8 medalhas: 5 de ouro e 3 de prata. Um dos atletas subiu ao lugar mais alto do pódio em duas categorias, e quatro garantiram vaga no Campeonato Brasileiro.\n\nTodos, para o professor, já eram campeões independentemente do resultado.",
+    coverUrl: "/images/campeonatos/estadual-es-2025.webp",
+    officialUrl: null,
+    featured: false,
+  },
 ];
 
 export const RESULTS: Result[] = [];
 
-export const NEWS: NewsLink[] = [];
+export const NEWS: NewsLink[] = [
+  {
+    championship: "estadual-es-2025",
+    title: "Equipe de Castelo conquista 8 medalhas no Estadual de Muay Thai",
+    url: "https://aquinoticias.com/linha-de-fundo/esportes/equipe-de-castelo-conquista-8-medalhas-no-estadual-de-muay-thai/",
+    source: "Aqui Notícias",
+    publishedAt: "2025-07-08",
+  },
+];
 
 export const EVENTS: SportEvent[] = [];

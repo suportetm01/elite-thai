@@ -5,17 +5,18 @@
  */
 export const SITE_MEDIA = {
   history: {
-    src: "/images/nossa-historia.webp",
-    alt: "Atleta da equipe em evento de Muay Thai: no corner com o treinador, em entrevista no ringue e na entrada para a luta",
+    src: "/images/historia-graduacao-2025.webp",
+    alt: "Turma adulta da Elite Thai com os certificados da graduação, ajoelhada sob a placa da academia",
   },
   team: {
     src: "/images/equipe-elite-thai.webp",
     alt: "Alunos, atletas e professores da Elite Thai reunidos em frente à academia",
   },
   /** fundos decorativos (o texto da seção já diz tudo; a foto não precisa de descrição) —
-   *  na abertura, professor e atleta antes da luta (post da graduação de dezembro/2025) */
+   *  na abertura, professor e atleta antes da luta; na faixa, o professor orientando a turma
+   *  (ambas do post da graduação de dezembro/2025) */
   heroBackdrop: "/images/hero-treino.webp",
-  band: "/images/fundo-treino-chute.webp",
+  band: "/images/fundo-professor.webp",
   trialBackdrop: "/images/equipe-elite-thai.webp",
   highlights: {
     src: "/videos/destaques-luta.mp4",
