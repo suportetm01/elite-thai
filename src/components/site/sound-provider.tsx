@@ -1,24 +1,27 @@
 "use client";
 
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 
 /**
- * Áudio cinematográfico OPCIONAL, 100% sintetizado (Web Audio API):
- * sem arquivos de terceiros, sem licenças e sem download extra.
- * Nunca inicia sozinho — só depois que o visitante liga o som. O estado não é
- * persistido entre visitas justamente para nunca tocar automaticamente.
+ * Som do site: ligado por padrão (o botão do cabeçalho desliga, e a escolha fica salva no
+ * aparelho). Efeitos 100% sintetizados (Web Audio API), sem arquivos de terceiros.
+ * Os navegadores só liberam áudio depois do primeiro toque, clique ou tecla do visitante:
+ * até lá o som fica "armado" (`unlocked = false`) e o vídeo de destaques toca sem som.
  */
 export type SoundName = "impact" | "whoosh" | "bag" | "crowd" | "transition";
 
 type SoundContextValue = {
   enabled: boolean;
+  /** o visitante já interagiu com a página: o navegador permite tocar áudio */
+  unlocked: boolean;
   toggle: () => void;
   play: (name: SoundName, intensity?: number) => void;
   setAmbience: (on: boolean) => void;
 };
 
 const SoundContext = createContext<SoundContextValue>({
-  enabled: false,
+  enabled: true,
+  unlocked: false,
   toggle: () => undefined,
   play: () => undefined,
   setAmbience: () => undefined,
@@ -149,26 +152,64 @@ class SoundEngine {
   }
 }
 
+// Preferência salva no aparelho ("off" = o visitante desligou o som)
+const PREF_KEY = "et-sound";
+const prefListeners = new Set<() => void>();
+const readPref = () => {
+  try {
+    return window.localStorage.getItem(PREF_KEY) !== "off";
+  } catch {
+    return true;
+  }
+};
+const subscribePref = (cb: () => void) => {
+  prefListeners.add(cb);
+  return () => prefListeners.delete(cb);
+};
+const writePref = (on: boolean) => {
+  try {
+    window.localStorage.setItem(PREF_KEY, on ? "on" : "off");
+  } catch {
+    /* modo privado: vale só para esta visita */
+  }
+  prefListeners.forEach((cb) => cb());
+};
+
+/** Gestos que liberam o áudio no navegador (rolar a página não conta). */
+const UNLOCK_EVENTS = ["pointerdown", "keydown", "touchend"] as const;
+
 export function SoundProvider({ children }: { children: React.ReactNode }) {
-  const [enabled, setEnabled] = useState(false);
-  const enabledRef = useRef(false);
+  const enabled = useSyncExternalStore(subscribePref, readPref, () => true);
+  const [unlocked, setUnlocked] = useState(false);
   const engine = useRef<SoundEngine | null>(null);
   const ambienceWanted = useRef(false);
 
+  /** Cria/retoma o motor de áudio — precisa acontecer dentro de um gesto do visitante. */
+  const start = useCallback(() => {
+    engine.current ??= new SoundEngine();
+    void engine.current.ctx.resume();
+    if (ambienceWanted.current) engine.current.setAmbience(true);
+  }, []);
+
+  useEffect(() => {
+    const unlock = () => {
+      setUnlocked(true);
+      if (readPref()) start();
+      UNLOCK_EVENTS.forEach((type) => window.removeEventListener(type, unlock, true));
+    };
+    UNLOCK_EVENTS.forEach((type) => window.addEventListener(type, unlock, { capture: true, passive: true }));
+    return () => UNLOCK_EVENTS.forEach((type) => window.removeEventListener(type, unlock, true));
+  }, [start]);
+
   const toggle = useCallback(() => {
-    const next = !enabledRef.current;
-    enabledRef.current = next;
-    if (next) {
-      // Criado dentro do gesto do usuário (exigência dos navegadores)
-      engine.current ??= new SoundEngine();
-      void engine.current.ctx.resume();
-      if (ambienceWanted.current) engine.current.setAmbience(true);
-    } else if (engine.current) {
+    const next = !readPref();
+    writePref(next);
+    if (next) start();
+    else if (engine.current) {
       engine.current.setAmbience(false);
       void engine.current.ctx.suspend();
     }
-    setEnabled(next);
-  }, []);
+  }, [start]);
 
   const play = useCallback(
     (name: SoundName, intensity?: number) => {
@@ -195,7 +236,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener("visibilitychange", onHide);
   }, [enabled]);
 
-  const value = useMemo(() => ({ enabled, toggle, play, setAmbience }), [enabled, toggle, play, setAmbience]);
+  const value = useMemo(() => ({ enabled, unlocked, toggle, play, setAmbience }), [enabled, unlocked, toggle, play, setAmbience]);
   return <SoundContext value={value}>{children}</SoundContext>;
 }
 

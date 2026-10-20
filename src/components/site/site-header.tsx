@@ -20,8 +20,8 @@ export function SiteHeader(props: Props) {
   return <SiteHeaderShell {...props} pathname={pathname} />;
 }
 
-/** Cabeçalho sem dependência de URL: usado também como fallback pré-renderizado. */
-export function SiteHeaderShell({ logoUrl, instagramUrl, whatsappHref, pathname }: Props & { pathname: string }) {
+/** Cabeçalho em si; a página atual chega por `pathname` (destaque do menu). */
+function SiteHeaderShell({ logoUrl, instagramUrl, whatsappHref, pathname }: Props & { pathname: string }) {
   const [scrolled, setScrolled] = useState(false);
   const { enabled, toggle } = useSound();
 
@@ -83,7 +83,7 @@ export function SiteHeaderShell({ logoUrl, instagramUrl, whatsappHref, pathname 
             type="button"
             onClick={toggle}
             aria-pressed={enabled}
-            aria-label={enabled ? "Desativar som" : "Ativar som cinematográfico"}
+            aria-label={enabled ? "Desativar som" : "Ativar som"}
             title={enabled ? "Desativar som" : "Ativar som"}
             className="grid size-10 place-items-center rounded-full border border-white/10 text-zinc-300 transition-colors hover:border-gold/60 hover:text-gold"
           >

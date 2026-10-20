@@ -1,5 +1,4 @@
-import { Suspense } from "react";
-import { SiteHeader, SiteHeaderShell } from "@/components/site/site-header";
+import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { MobileCtaBar } from "@/components/site/mobile-cta-bar";
 import { SoundProvider } from "@/components/site/sound-provider";
@@ -14,16 +13,13 @@ export default async function SiteLayout({ children }: LayoutProps<"/">) {
   return (
     <MotionProvider>
       <SoundProvider>
-        <Suspense fallback={<SiteHeaderShell logoUrl={settings.logoUrl} instagramUrl={settings.instagramUrl} whatsappHref={whatsappHref} pathname="" />}>
-          <SiteHeader logoUrl={settings.logoUrl} instagramUrl={settings.instagramUrl} whatsappHref={whatsappHref} />
-        </Suspense>
+        {/* site estático: o cabeçalho já sai pronto no HTML de cada página (sem versão provisória) */}
+        <SiteHeader logoUrl={settings.logoUrl} instagramUrl={settings.instagramUrl} whatsappHref={whatsappHref} />
         <main id="conteudo" className="relative overflow-x-clip">
           {children}
         </main>
         <SiteFooter />
-        <Suspense fallback={null}>
-          <MobileCtaBar whatsappHref={whatsappHref} />
-        </Suspense>
+        <MobileCtaBar whatsappHref={whatsappHref} />
       </SoundProvider>
     </MotionProvider>
   );

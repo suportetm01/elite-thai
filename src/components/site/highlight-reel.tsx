@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { useSound } from "@/components/site/sound-provider";
 import { useReducedMotionSafe } from "@/lib/use-reduced-motion-safe";
 import { cn } from "@/lib/utils";
 
@@ -9,8 +10,10 @@ const control = "grid size-10 place-items-center rounded-full border border-whit
 
 /**
  * Vídeo vertical (formato reels). Só começa a baixar quando o visitante se aproxima, toca
- * sem som enquanto está visível e pausa fora da tela. Som e pausa ficam nos botões; com
- * "reduzir movimento" não toca sozinho, espera o play.
+ * enquanto está visível e pausa fora da tela. O som segue o botão de som do site (ligado por
+ * padrão): começa sem som até o primeiro toque/clique na página, que é quando o navegador
+ * libera áudio. O botão do vídeo liga/desliga só o vídeo; com "reduzir movimento" não toca
+ * sozinho, espera o play.
  */
 export function HighlightReel({ src, poster, label, className }: { src: string; poster: string; label: string; className?: string }) {
   const frame = useRef<HTMLDivElement>(null);
@@ -21,7 +24,12 @@ export function HighlightReel({ src, poster, label, className }: { src: string; 
   const [visible, setVisible] = useState(false);
   const [choice, setChoice] = useState<"auto" | "play" | "pause">("auto");
   const [playing, setPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
+  const { enabled: soundOn, unlocked } = useSound();
+  // escolha feita no botão do vídeo (vale enquanto o som do site não mudar)
+  const [soundChoice, setSoundChoice] = useState<{ muted: boolean; site: boolean } | null>(null);
+  // o navegador recusou tocar com som: segue mudo até o visitante pedir
+  const [blocked, setBlocked] = useState(false);
+  const muted = soundChoice && soundChoice.site === soundOn ? soundChoice.muted : blocked || !(soundOn && unlocked);
   const shouldPlay = visible && (choice === "play" || (choice === "auto" && !reduce));
 
   useEffect(() => {
@@ -52,14 +60,25 @@ export function HighlightReel({ src, poster, label, className }: { src: string; 
   useEffect(() => {
     const v = video.current;
     if (!v || !near) return;
-    // navegador bloqueou a reprodução automática: fica no play manual
-    if (shouldPlay) v.play().catch((err: DOMException) => err.name === "NotAllowedError" && setChoice("pause"));
-    else v.pause();
+    if (!shouldPlay) {
+      v.pause();
+      return;
+    }
+    v.play().catch((err: DOMException) => {
+      if (err.name !== "NotAllowedError") return;
+      // com som foi recusado: tenta sem som; se nem assim, fica no play manual
+      if (!v.muted) {
+        v.muted = true;
+        setBlocked(true);
+        v.play().catch(() => setChoice("pause"));
+      } else setChoice("pause");
+    });
   }, [near, shouldPlay]);
 
   const togglePlay = () => setChoice(playing ? "pause" : "play");
   const toggleSound = () => {
-    setMuted((m) => !m);
+    setSoundChoice({ muted: !muted, site: soundOn });
+    setBlocked(false);
     if (muted && !playing) setChoice("play");
   };
 
