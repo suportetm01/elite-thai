@@ -45,7 +45,7 @@ export const SCHEDULES: ClassSchedule[] = [
   ...aulas("muay-thai", [1, 3], "19:00", "Feminino"),
   ...aulas("muay-thai", [1, 2, 3, 4], "20:00"),
   // Boxe
-  ...aulas("boxe", [1, 2, 5], "20:00"),
+  ...aulas("boxe", [1, 3, 5], "20:00"),
   // MMA
   ...aulas("mma", [2, 4], "09:30"),
   ...aulas("mma", [2, 4, 5], "20:00"),
