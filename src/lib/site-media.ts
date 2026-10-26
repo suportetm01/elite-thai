@@ -18,6 +18,8 @@ export const SITE_MEDIA = {
   heroBackdrop: "/images/hero-treino.webp",
   band: "/images/fundo-professor.webp",
   trialBackdrop: "/images/equipe-elite-thai.webp",
+  /** atleta no córner: abertura da página Atletas e convite no fim da grade de atletas da home */
+  nextAthlete: "/images/atletas/atleta-no-corner.webp",
   highlights: {
     src: "/videos/destaques-luta.mp4",
     poster: "/videos/destaques-luta-capa.webp",

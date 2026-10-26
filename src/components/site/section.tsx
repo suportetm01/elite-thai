@@ -1,3 +1,4 @@
+import Image from "@/components/site/smart-image";
 import { Reveal } from "@/components/site/reveal";
 import { cn } from "@/lib/utils";
 
@@ -44,21 +45,32 @@ export function PageHero({
   eyebrow,
   title,
   description,
+  image,
   children,
 }: {
   eyebrow: string;
   title: React.ReactNode;
   description?: React.ReactNode;
+  /** foto decorativa: à direita no computador (dissolvendo no fundo); bem suave atrás do texto no celular */
+  image?: string;
   children?: React.ReactNode;
 }) {
   return (
-    <header className="film-grain relative overflow-hidden border-b border-white/[0.06] pb-16 pt-40 md:pb-24 md:pt-48">
+    <header className={cn("film-grain relative overflow-hidden border-b border-white/[0.06] pb-16 pt-40 md:pb-24 md:pt-48", image && "lg:min-h-[680px]")}>
       <div className="pointer-events-none absolute inset-0" aria-hidden>
         <div className="absolute -right-40 -top-40 size-[640px] rounded-full bg-blood/20 blur-[140px]" />
+        {image && (
+          <div className="absolute inset-y-0 right-0 w-full opacity-25 [mask-image:linear-gradient(180deg,black_35%,transparent)] lg:top-16 lg:w-[44%] lg:opacity-75 lg:[mask-image:linear-gradient(90deg,transparent,black_40%)]">
+            <Image src={image} alt="" fill priority sizes="(min-width: 1024px) 44vw, 100vw" className="object-cover object-[50%_10%] lg:object-top" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-ink/40" />
+          </div>
+        )}
         <div className="absolute bottom-0 left-1/3 h-px w-2/3 bg-gradient-to-r from-transparent via-gold/40 to-transparent" />
       </div>
       <div className="container-site relative">
-        <SectionHeading as="h1" eyebrow={eyebrow} title={title} description={description} />
+        <div className={cn(image && "lg:max-w-[54%]")}>
+          <SectionHeading as="h1" eyebrow={eyebrow} title={title} description={description} />
+        </div>
         {children}
       </div>
     </header>

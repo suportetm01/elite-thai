@@ -6,6 +6,7 @@ import { Stagger, StaggerItem } from "@/components/site/reveal";
 import { EmptyState, PageHero, Section } from "@/components/site/section";
 import { getAthletes } from "@/lib/data/public";
 import { toAthleteCard } from "@/lib/data/mappers";
+import { SITE_MEDIA } from "@/lib/site-media";
 
 export const metadata: Metadata = {
   title: "Atletas",
@@ -26,6 +27,7 @@ export default async function AtletasPage() {
           </>
         }
         description="Atletas que representam a equipe dentro e fora do ringue. Resultados exibidos somente a partir dos registros oficiais."
+        image={SITE_MEDIA.nextAthlete}
       />
       <Section className="pt-12 md:pt-16">
         <div className="container-site">

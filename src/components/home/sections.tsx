@@ -69,9 +69,40 @@ export function AthletesSection({ athletes, index }: { athletes: AthleteCardData
               <AthleteCard athlete={athlete} />
             </StaggerItem>
           ))}
+          <StaggerItem>
+            <NextAthleteCard />
+          </StaggerItem>
         </Stagger>
       </div>
     </Section>
+  );
+}
+
+/** Último card da grade de atletas: convite para a aula experimental, com um atleta no córner. */
+function NextAthleteCard() {
+  return (
+    <Link
+      href={TRIAL_PATH}
+      className="group relative block aspect-[3/4] overflow-hidden border border-blood/40 bg-coal outline-offset-4 cut-corner-br"
+    >
+      <Image
+        src={SITE_MEDIA.nextAthlete}
+        alt=""
+        fill
+        sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 80vw"
+        className="object-cover object-top transition-transform duration-700 ease-[var(--ease-cinematic)] group-hover:scale-[1.06]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-5">
+        <p className="eyebrow text-gold">Sua vez</p>
+        <p className="display mt-1 text-4xl text-white md:text-5xl">
+          O próximo <span className="text-blood">é você</span>
+        </p>
+        <p className="mt-3 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-zinc-300 group-hover:text-white">
+          Agendar aula experimental <ArrowUpRight className="size-4" />
+        </p>
+      </div>
+    </Link>
   );
 }
 
